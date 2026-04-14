@@ -7,10 +7,9 @@ services:
     env_file:
       - .env
     volumes:
+      # Passiamo solo il "cuore" di Docker
       - /var/run/docker.sock:/var/run/docker.sock
-      # Passiamo il comando docker e compose dall'host al container
-      - /usr/bin/docker:/usr/bin/docker
-      - /usr/bin/docker-compose:/usr/bin/docker-compose
+      # Mappa la cartella per i file
       - .:/app
       - /app/node_modules
     restart: always
