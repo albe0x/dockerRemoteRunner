@@ -7,8 +7,8 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      # Permette al container di comandare l'host tramite il socket di Docker
       - /var/run/docker.sock:/var/run/docker.sock
-      # Mantiene i file del progetto persistenti nella cartella della VM
       - .:/app
+      # Fondamentale: protegge i moduli installati nel container
+      - /app/node_modules 
     restart: always
