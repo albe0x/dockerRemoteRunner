@@ -6,6 +6,21 @@ services:
     container_name: remote-runner-container
     ports:
       - "8080:8080"
+    # Aggiungi questa sezione
+    env_file:
+      - .env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - .:/app
+      - /app/node_modules 
+    restart: alwaysversion: '3.8'
+
+services:
+  remote-runner:
+    build: .
+    container_name: remote-runner-container
+    ports:
+      - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - .:/app
