@@ -2,6 +2,32 @@ const express = require('express');
 const { exec } = require('child_process');
 const app = express();
 
+// Recupera il token dalla variabile d'ambiente impostata nel compose
+const TOKEN = process.env.GITHUB_TOKEN;
+const TARGET_DIR = "Progetto-Informatica";
+
+app.post('/run-deploy', (req, res) => {
+    // URL dinamico con il token segreto
+    const REPO_URL = `https://${TOKEN}@github.com/albe0x/Progetto-Informatica.git`;
+
+    const command = `
+        if [ ! -d "${TARGET_DIR}" ]; then
+            git clone ${REPO_URL} ${TARGET_DIR}
+        fi
+        cd ${TARGET_DIR} && bash serverDeploy.sh
+    `;
+
+    exec(command, (error, stdout, stderr) => {
+        const output = stdout + (stderr ? "\n--- LOG ---\n" + stderr : "");
+        if (error) return res.status(500).send(`<h2>Errore</h2><pre>${output}</pre>`);
+        res.send(`<h2>Successo</h2><pre>${output}</pre>`);
+    });
+});
+
+// ... resto del codice (app.get e app.listen) identico a prima ...const express = require('express');
+const { exec } = require('child_process');
+const app = express();
+
 const REPO_URL = "https://github.com/albe0x/Progetto-Informatica.git";
 const TARGET_DIR = "Progetto-Informatica";
 
