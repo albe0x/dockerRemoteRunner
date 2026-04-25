@@ -18,4 +18,4 @@ COPY server.js .
 
 # Il comando per avviare il pannello
 EXPOSE 8080
-CMD ["node", "server.js"]
+CMD ["node", "--env-file=.env", "server.js"]
