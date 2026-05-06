@@ -2,14 +2,13 @@ services:
   remote-runner:
     build: .
     container_name: remote-runner-container
+    user: root
     ports:
       - "8080:8080"
     env_file:
       - .env
     volumes:
-      # Passiamo solo il "cuore" di Docker
       - /var/run/docker.sock:/var/run/docker.sock
-      # Mappa la cartella per i file
-      - .:/workspace
-      - /app/node_modules
+      # Questo crea lo specchio tra la cartella attuale e il container
+      - .:/app 
     restart: always
