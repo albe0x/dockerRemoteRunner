@@ -8,7 +8,13 @@ services:
     env_file:
       - .env
     volumes:
+      # Permette di comandare Docker dell'host
       - /var/run/docker.sock:/var/run/docker.sock
-      # Questo crea lo specchio tra la cartella attuale e il container
-      - .:/app 
+      
+      # Mappa la cartella attuale per vedere "Progetto-Informatica" fuori
+      - .:/app
+      
+      # CRITICO: Impedisce alla cartella locale di cancellare express dal container
+      - /app/node_modules
+      
     restart: always
