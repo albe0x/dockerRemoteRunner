@@ -10,6 +10,6 @@ services:
       # Passiamo solo il "cuore" di Docker
       - /var/run/docker.sock:/var/run/docker.sock
       # Mappa la cartella per i file
-      - .:/app
+      - .:/workspace
       - /app/node_modules
     restart: always
