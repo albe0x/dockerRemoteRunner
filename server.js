@@ -1,6 +1,9 @@
 const express = require('express');
-const { exec } = require('child_process'); // Questa va dichiarata UNA sola volta
+const { exec } = require('child_process');
 const app = express();
+
+// Necessario per processare il click del bottone dal form HTML
+app.use(express.urlencoded({ extended: true }));
 
 const TOKEN = process.env.GITHUB_TOKEN;
 const TARGET_DIR = "Progetto-Informatica";
@@ -24,11 +27,13 @@ app.get('/', (req, res) => {
 app.post('/run-deploy', (req, res) => {
     const REPO_URL = `https://${TOKEN}@github.com/albe0x/Progetto-Informatica.git`;
     
+    // Forziamo il comando a partire da /app (che è lo specchio della tua cartella host)
     const command = `
+        cd /app
         if [ ! -d "${TARGET_DIR}" ]; then
             git clone ${REPO_URL} ${TARGET_DIR}
         fi
-        cd ${TARGET_DIR} && bash serverDeploy.sh
+        cd ${TARGET_DIR} && git pull origin main && bash serverDeploy.sh
     `;
 
     exec(command, (error, stdout, stderr) => {
