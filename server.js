@@ -2,7 +2,6 @@ const express = require('express');
 const { exec } = require('child_process');
 const app = express();
 
-// Necessario per processare il click del bottone dal form HTML
 app.use(express.urlencoded({ extended: true }));
 
 const TOKEN = process.env.GITHUB_TOKEN;
@@ -27,7 +26,6 @@ app.get('/', (req, res) => {
 app.post('/run-deploy', (req, res) => {
     const REPO_URL = `https://${TOKEN}@github.com/albe0x/Progetto-Informatica.git`;
     
-    // Forziamo il comando a partire da /app (che è lo specchio della tua cartella host)
     const command = `
         cd /app
         if [ ! -d "${TARGET_DIR}" ]; then
@@ -43,4 +41,4 @@ app.post('/run-deploy', (req, res) => {
     });
 });
 
-app.listen(8080, '0.0.0.0', () => console.log('Runner pronto su porta 8080'));
+app.listen(8080, '0.0.0.0', () => console.log('🚀 Runner pronto su porta 8080'));
